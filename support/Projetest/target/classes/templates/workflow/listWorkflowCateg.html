@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add Provider</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+</head>
+
+<body>
+    <div class="container my-5">
+    
+		    
+    
+        <div class="alert alert-primary" role="alert">
+  			Liste des categories   
+		</div>
+        <div class="container">
+        <div class = "row">
+            <div class="card-body">
+                <div class = "row">
+                    <form action="#" th:action="@{'/workflow/listworkflow/'}" th:object="${workflow}" method="post">
+                        <div class="row">
+                        	<div class="col-md-4">
+                        	<div class = "row">
+                        		<div class="col-md-4">
+                                <label for="description" class="col-form-label">Categorie</label>
+                                </div>
+                                <div class="col-md-6">
+					            <div th:if="${workflowcategorie != null and not #lists.isEmpty(workflowcategorie)}">
+					                <select class="browser-default custom-select" th:field="*{idcategorie}"  id="idcategorie" placeholder="Idcategorie">
+	                    				<option selected 
+	                    				th:value= 0
+	                                    th:text="Categorie" 
+	                    				>
+	                    				<option 
+	                    				th:each="dropDownItem : ${workflowcategorie}"
+	                                    th:value="${dropDownItem.idcategorie}"
+	                                    th:text="${dropDownItem.name}" />
+					                </select>
+					           </div>
+					           </div>
+					       </div>
+                        	</div>
+                            <div class="col-md-3">
+                            	<div class = "row">
+                            	<div class="col-md-3">
+                                <label for="description" class="col-form-label">Status</label>
+                                </div>
+                                <div class="col-md-9"> 
+                                
+                                
+                                <select class="browser-default custom-select" th:field="*{enable}"  id="enable" placeholder="Enable">
+	                    				<option selected  th:value= 0  th:text="enabled"  >
+	                    				<option  th:value=1  th:text="1" />
+	                    				<option  th:value=2  th:text="2" />
+	                    				<option  th:value=3  th:text="3" />
+	                    				<option  th:value=4  th:text="4" />
+	                    				<option  th:value=5  th:text="5" />
+					                </select>
+					                <span th:if="${#fields.hasErrors('enable')}" th:errors="*{enable}" class="text-danger"></span>
+                                
+                                
+                                </div>
+                            	</div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                            	<div class = "row">
+                            	<div class="col-md-3">
+                                <label for="desc" class="col-form-label">Name</label>
+                                </div> 
+                                <div class="col-md-9">
+                                <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Name"> 
+                                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" >
+                                <input type="submit" class="btn btn-primary" value="Show Workflow by filtre (OR ALL)">
+                            </div>
+
+                        </div>
+                    </form>
+                    </div>
+                    <div class = "row">
+                    <div th:switch="${workflowcategorie}" class="container my-5">
+                   
+                    <div class="col-md-12">
+                        <h2 th:case="null">Pas d'enregistrement !!!!!!</h2>
+                        <div th:case="*">
+                            <table class="table table-striped table-responsive-md">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>description</th>
+                                        <th>Creation</th>
+                                        <th>Modification</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="workflow : ${workflowcategorie}">
+                                        <td th:text="${workflow.name}"></td>
+                                        <td th:text="${workflow.description}"></td>
+                                        <td th:text="${workflow.createat}"></td>
+                                        <td th:text="${workflow.updateat}"></td>
+                                        <td th:text="${workflow.enable}"></td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                    
+                    
+                    
+                </div>
+           
+        </div>
+    </div>
+</body>
+
+</html>
